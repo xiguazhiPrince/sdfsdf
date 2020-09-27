@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <Breadcrumb :style="{margin: '16px 0'}">
+      <BreadcrumbItem>首页</BreadcrumbItem>
+    </Breadcrumb>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -69,7 +72,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

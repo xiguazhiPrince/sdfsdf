@@ -21,10 +21,21 @@
   "build": {
     "appId": "com.xpf.myvueelectron",
     "mac": {
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
-      "target": ["nsis", "zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     }
+  },
+  "__npminstall_done": false,
+  "dependencies": {
+    "electron": "^10.1.2",
+    "electron-builder": "^22.8.1"
   }
 }

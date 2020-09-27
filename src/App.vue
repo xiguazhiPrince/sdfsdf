@@ -1,18 +1,62 @@
 <template>
   <div id="app">
+    <div class="layout">
+      <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
+        <Menu :active-name="'1-1'" :theme="'dark'" :width="'auto'" :open-names="['1']">
+          <Submenu name="1" :to="'/home'">
+            <template slot="title">
+              <Icon type="ios-navigate"></Icon>
+              客户列表
+            </template>
+            <MenuItem name="1-1" :to="'/'">首页</MenuItem>
+            <MenuItem name="1-2" :to="'/customerList'">客户列表</MenuItem>
+          </Submenu>
+          <!--<Submenu name="2">-->
+            <!--<template slot="title">-->
+              <!--<Icon type="ios-keypad"></Icon>-->
+              <!--Item 2-->
+            <!--</template>-->
+            <!--<MenuItem name="2-1">Option 1</MenuItem>-->
+            <!--<MenuItem name="2-2">Option 2</MenuItem>-->
+          <!--</Submenu>-->
+        </Menu>
+      </Sider>
+      <Layout :style="{marginLeft: '200px'}">
+        <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
+        <Content :style="{padding: '0 16px 16px'}">
+          <Card :style="{marginTop: '24px'}">
+            <div style="min-height: 80vh">
+              <router-view/>
+            </div>
+          </Card>
+        </Content>
+      </Layout>
+    </div>
     <!--<img src="./assets/logo.png">-->
-    <router-view/>
   </div>
 </template>
 
 <script>
-
+import {Breadcrumb, Content, Layout, Sider, MenuItem, BreadcrumbItem, Submenu, Icon} from 'view-design';
 export default {
   name: 'App',
+  components: {
+    Breadcrumb,
+    Content,
+    Layout,
+    Sider,
+    MenuItem,
+    BreadcrumbItem,
+    Submenu,
+    Icon
+  },
   mounted(){
     this.querySelectorAllahref();
     this.observerBodyChange()
 
+    ipcRenderer.on('resize-window', (event, arg) => {
+      console.log('resize-window', event, arg)
+    })
   },
   methods:{
     observerBodyChange(){
@@ -89,8 +133,19 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /*text-align: center;*/
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.layout{
+  border: 1px solid #d7dde4;
+  background: #f5f7f9;
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.layout-header-bar{
+  background: #fff;
+  box-shadow: 0 1px 1px rgba(0,0,0,.1);
 }
 </style>

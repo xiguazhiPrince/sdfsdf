@@ -1,5 +1,9 @@
 <template>
     <div>
+      <Breadcrumb :style="{margin: '16px 0'}">
+        <BreadcrumbItem>首页</BreadcrumbItem>
+        <BreadcrumbItem>客户列表</BreadcrumbItem>
+      </Breadcrumb>
       <Button @click="function() {
 			    $router.back(-1);
       }">返回</Button>

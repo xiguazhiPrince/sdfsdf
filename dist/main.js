@@ -1,6 +1,6 @@
-const {app, BrowserWindow, shell, ipcMain, dialog} =require('electron');//引入electron
-const path = require('path')
-const renderProcessApi = path.join(__dirname, './preload.js')
+const {app, BrowserWindow, shell, ipcMain, dialog} = require('electron');//引入electron
+const path = require('path');
+const renderProcessApi = path.join(__dirname, './preload.js');
 
 let win;
 
@@ -10,17 +10,17 @@ function createWindow() {
       height: 600,
       webPreferences: {
         nodeIntegration: true,
+        nodeIntegrationInSubFrames: true,
         preload:  renderProcessApi,//预加载全局的js脚本
         webSecurity: false,
         enableRemoteModule: true
       }
-  })
+  });
 
   win.webContents.openDevTools();  //开启调试工具
 
   //在窗口内要展示的内容index.html 就是打包生成的index.html
   // win.loadURL(`file://${__dirname}/index.html`)
-
   win.loadURL(path.join(__dirname, 'index.html'));
 
   // win.loadFile('./index.html')
@@ -28,10 +28,22 @@ function createWindow() {
   win.on('close',() => {
       //回收BrowserWindow对象
       win = null;
-    });
-    win.on('resize',() => {
-      win.reload();
-    })
+  });
+  win.on('resize',() => {
+    // win.reload();
+    const message = `Size: ${win.getSize()} Position: ${win.getPosition()}`;
+
+    console.log('resize',message);
+    win.webContents.send('resize-window', message)
+  });
+
+  win.on('move', () => {
+    // ipcMain.send()
+    const message = `Size: ${win.getSize()} Position: ${win.getPosition()}`;
+    console.log('move', message);
+    win.webContents.send('resize-window', message)
+  })
+
 
 }
 
@@ -57,4 +69,5 @@ if (process.defaultApp) {
 
 app.on('open-url', (event, url) => {
   dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
-})
+});
+
