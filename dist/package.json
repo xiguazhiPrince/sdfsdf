@@ -1,0 +1,30 @@
+{
+  "name": "my-vue-electron",
+  "version": "1.0.0",
+  "description": "A DIY Vue.js - electron project",
+  "author": "15303933327@163.com <xpf111888>",
+  "private": true,
+  "productName": "项目名称",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "packager-win": "electron-packager . mydiyelectron2 --platform=win32 --arch=x64 --overwrite",
+    "package:win": "electron-packager . mydiyelectron --overwrite --platform=win32 --arch=x64"
+  },
+  "devDependencies": {
+    "electron": "^10.1.2",
+    "electron-packager": "^15.1.0"
+  },
+  "build": {
+    "appId": "com.xpf.myvueelectron",
+    "mac": {
+      "target": ["dmg", "zip"]
+    },
+    "win": {
+      "target": ["nsis", "zip"]
+    }
+  }
+}
