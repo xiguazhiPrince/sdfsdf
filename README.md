@@ -38,4 +38,6 @@ git push -u origin master
 "# sdfsdf"
 
 
-"# sdfsdf" 
+"# sdfsdf"
+
+git branch --set-upstream-to=origin/master master
