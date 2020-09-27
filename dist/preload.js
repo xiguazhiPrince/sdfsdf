@@ -45,6 +45,6 @@ function querySelectorAll() {
       }
     })
   }else {
-    alert('a标签节点获取失败')
+    console.log('a标签节点为0个')
   }
 }

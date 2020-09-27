@@ -4,43 +4,28 @@
     <h2>Essential Links</h2>
     <ul>
       <li>
-        <a
-          href="https://vuejs.org"
-          target="_blank"
-        >
+        <a href="https://vuejs.org" target="_blank">
           Core Docs
         </a>
       </li>
       <li>
-        <a
-          href="https://forum.vuejs.org"
-          target="_blank"
-        >
+        <a href="https://forum.vuejs.org" target="_blank">
           Forum
         </a>
       </li>
       <li>
-        <a
-          href="https://chat.vuejs.org"
-          target="_blank"
-        >
+        <a href="https://chat.vuejs.org" target="_blank">
           Community Chat
         </a>
       </li>
       <li>
-        <a
-          href="https://twitter.com/vuejs"
-          target="_blank"
-        >
+        <a href="https://twitter.com/vuejs" target="_blank">
           Twitter
         </a>
       </li>
       <br>
       <li>
-        <a
-          href="http://vuejs-templates.github.io/webpack/"
-          target="_blank"
-        >
+        <a href="http://vuejs-templates.github.io/webpack/" target="_blank">
           Docs for This Template
         </a>
       </li>
@@ -48,43 +33,36 @@
     <h2>Ecosystem</h2>
     <ul>
       <li>
-        <a
-          href="http://router.vuejs.org/"
-          target="_blank"
-        >
+        <a href="http://router.vuejs.org/" target="_blank">
           vue-router
         </a>
       </li>
       <li>
-        <a
-          href="http://vuex.vuejs.org/"
-          target="_blank"
-        >
+        <a href="http://vuex.vuejs.org/" target="_blank" >
           vuex
         </a>
       </li>
       <li>
-        <a
-          href="http://vue-loader.vuejs.org/"
-          target="_blank"
-        >
+        <a href="http://vue-loader.vuejs.org/" target="_blank">
           vue-loader
         </a>
       </li>
       <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-        >
+        <a href="https://github.com/vuejs/awesome-vue" target="_blank">
           awesome-vue
         </a>
       </li>
     </ul>
-    <Button @click="show">show</Button>
-    <Button @click="create">show</Button>
+    <Button @click="show">发送ipcRenderer消息</Button>
+    <Button @click="create">创建子窗口</Button>
+    <Button @click="function() {
+      $router.push({
+					path: '/customerList',
+					query: {}
+				});
+    }">客户列表</Button>
 
     <div id="aaa">
-
     </div>
   </div>
 </template>
@@ -104,7 +82,7 @@ export default {
       html=document.createElement('a');
       html.setAttribute('href', 'www.baidu.com');
       html.style.display='block';
-      html.innerText='a标签'
+      html.innerText='测试dom节点更新后是否能检测到';
       aaa.appendChild(html)
     },5000)
   },

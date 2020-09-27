@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <!--<img src="./assets/logo.png">-->
     <router-view/>
   </div>
 </template>
@@ -10,13 +10,13 @@
 export default {
   name: 'App',
   mounted(){
-    this.querySelectorAllahref()
+    this.querySelectorAllahref();
     this.observerBodyChange()
 
   },
   methods:{
     observerBodyChange(){
-      let _this = this
+      let _this = this;
 
       // Select the node that will be observed for mutations
       const targetNode = document.getElementById('body');
@@ -76,7 +76,7 @@ export default {
           }
         })
       }else {
-        alert('a标签节点获取失败')
+        console.log('a标签节点为0个')
       }
     }
 
