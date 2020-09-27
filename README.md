@@ -36,7 +36,7 @@ git remote add origin https://github.com/xiguazhiPrince/vue-iview-electron-examp
 git push -u origin master
 "# sdfsdf"
 "# sdfsdf"
-sd
+sdfd
 
 
 "# sdfsdf"
