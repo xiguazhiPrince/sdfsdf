@@ -2,39 +2,60 @@
   "name": "my-vue-electron",
   "version": "1.0.0",
   "description": "A DIY Vue.js - electron project",
-  "author": "15303933327@163.com <xpf111888>",
+  "author": "xpf",
+  "license": "MIT",
   "private": true,
   "productName": "项目名称",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "postinstall": "electron-builder install-app-deps",
-    "packager-win": "electron-packager . mydiyelectron2 --platform=win32 --arch=x64 --overwrite",
-    "package:win": "electron-packager . mydiyelectron --overwrite --platform=win32 --arch=x64"
+    "dist": "electron-builder"
   },
-  "devDependencies": {
-    "electron": "^10.1.2",
-    "electron-packager": "^15.1.0"
+  "dependencies": {
   },
   "build": {
     "appId": "com.xpf.myvueelectron",
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
+    "productName": "myvueelectron",
+    "copyright": "Copyright © 2020 ${author}",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true,
+      "installerIcon": "./icons/icon.ico",
+      "uninstallerIcon": "./icons/icon.ico",
+      "installerHeaderIcon": "./icons/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "customList",
+      "include": "./script/installer.nsh"
     },
     "win": {
       "target": [
-        "nsis",
-        "zip"
-      ]
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "./icons/icon.png"
+    },
+    "electronDownload": {
+      "mirror": "https://npm.taobao.org/mirrors/electron/"
     }
   },
-  "__npminstall_done": false,
-  "dependencies": {
+  "devDependencies": {
+    "electron-packager": "^15.1.0",
     "electron": "^10.1.2",
     "electron-builder": "^22.8.1"
   }
