@@ -71,3 +71,17 @@ app.on('open-url', (event, url) => {
   dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
 });
 
+
+// import initSqlJs from "sql.js";
+var initSqlJs = require('./static/js/sql-wasm.js')
+var config = {
+  // 指定加载sql-wasm.wasm文件的位置
+  locateFile: filename => `./static/js/${filename}`
+};
+initSqlJs(config).then(function(SQL){
+  // Load the db
+  var db = new SQL.Database();
+  console.log('db',db)
+}).catch((res)=>{
+  console.log('res',res)
+});

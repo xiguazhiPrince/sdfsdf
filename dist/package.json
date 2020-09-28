@@ -13,6 +13,7 @@
     "dist": "electron-builder"
   },
   "dependencies": {
+    "sql.js": "^1.3.0"
   },
   "build": {
     "appId": "com.xpf.myvueelectron",
