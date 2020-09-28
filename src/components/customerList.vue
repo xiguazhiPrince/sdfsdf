@@ -7,57 +7,71 @@
       <Button @click="function() {
 			    $router.back(-1);
       }">返回</Button>
-      <Table :columns="columns1" :data="data1"></Table>
+
+      <Button @click="function() {
+			    $router.push({
+            path: '/customerAdd',
+            query: {}
+        });
+      }">新增</Button>
+      <Table :columns="columns" :data="list"></Table>
     </div>
 </template>
 
 <script>
-    export default {
+
+  import indexDbUtil from '../assets/db/customerDb'
+
+  export default {
         name: "customerList",
         data() {
           return {
-            columns1: [
+            columns: [
               {
-                title: 'Name',
+                title: '姓名',
                 key: 'name'
               },
               {
-                title: 'Age',
-                key: 'age'
+                title: '手机号',
+                key: 'mobile'
               },
               {
-                title: 'Address',
-                key: 'address'
+                title: '身份证号',
+                key: 'idNumber'
+              },
+              {
+                title: '套餐名',
+                key: 'businessName'
+              },
+              {
+                title: '创建时间',
+                key: 'systemCreateTime'
+              },
+              {
+                title: '更新时间',
+                key: 'systemUpdateTime'
               }
             ],
-            data1: [
-              {
-                name: 'John Brown',
-                age: 18,
-                address: 'New York No. 1 Lake Park',
-                date: '2016-10-03'
-              },
-              {
-                name: 'Jim Green',
-                age: 24,
-                address: 'London No. 1 Lake Park',
-                date: '2016-10-01'
-              },
-              {
-                name: 'Joe Black',
-                age: 30,
-                address: 'Sydney No. 1 Lake Park',
-                date: '2016-10-02'
-              },
-              {
-                name: 'Jon Snow',
-                age: 26,
-                address: 'Ottawa No. 2 Lake Park',
-                date: '2016-10-04'
-              }
-            ]
+            list: [],
+            total: 0
           }
-        }
+        },
+      mounted(){
+          let _this = this
+        indexDbUtil.createDB_And_InitTables('customer_info',
+                                            function () {
+                                              indexDbUtil.listDataByPage('customer_info', _this.handleGetList, 1, 10)
+                                            },
+                                            function () {
+                                              console.log('fail')
+                                            })
+      },
+      methods:{
+          handleGetList(list, total){
+            this.list = list;
+            this.total = total
+          }
+      }
     }
 </script>
 

@@ -59,10 +59,10 @@
     <Button @click="show">发送ipcRenderer消息</Button>
     <Button @click="create">创建子窗口</Button>
     <Button @click="function() {
-      $router.push({
-					path: '/customerList',
-					query: {}
-				});
+        $router.push({
+            path: '/customerList',
+            query: {}
+        });
     }">客户列表</Button>
 
     <div id="aaa">

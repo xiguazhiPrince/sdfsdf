@@ -78,13 +78,13 @@ export default {
       const callback = function(mutationsList, observer) {
         // Use traditional 'for loops' for IE 11
         for(const mutation of mutationsList) {
-          console.log('mutation',mutation)
+          // console.log('mutation',mutation)
           if (mutation.type === 'childList') {
-            console.log('A child node has been added or removed.');
+            // console.log('A child node has been added or removed.');
             _this.querySelectorAllahref()
           }
           else if (mutation.type === 'attributes') {
-            console.log('The ' + mutation.attributeName + ' attribute was modified.');
+            // console.log('The ' + mutation.attributeName + ' attribute was modified.');
           }
         }
       };
@@ -106,8 +106,8 @@ export default {
       let links = []
 
       links = document.querySelectorAll('a[href]')
-      console.log('document',document)
-      console.log('links',links)
+      // console.log('document',document)
+      // console.log('links',links)
 
       if (links.length !== 0) {
         Array.prototype.forEach.call(links, (link) => {
