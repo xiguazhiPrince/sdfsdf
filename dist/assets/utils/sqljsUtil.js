@@ -16,7 +16,7 @@ initSqlJs(config).then(function(SQL){
   // Load the db
   db = new SQL.Database();
   console.log('sqljs链接', db)
-  test();
+  // test();
 }).catch((res)=>{
   console.log('sqljs链接异常', res)
 });
@@ -25,9 +25,9 @@ initSqlJs(config).then(function(SQL){
 function test() {
 
   // Execute some sql
-  sqlstr = "CREATE TABLE hello (a int, b char);";
-  sqlstr += "INSERT INTO hello VALUES (0, 'hello');"
-  sqlstr += "INSERT INTO hello VALUES (1, 'world');"
+  let sqlstr = "CREATE TABLE hello (a int, b char);";
+  sqlstr += "INSERT INTO hello VALUES (0, 'hello');";
+  sqlstr += "INSERT INTO hello VALUES (1, 'world');";
   db.run(sqlstr); // Run the query without returning anything
 
   var res = db.exec("SELECT * FROM hello");

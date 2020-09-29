@@ -38,7 +38,6 @@ function createWindow() {
   });
 
   win.on('move', () => {
-    // ipcMain.send()
     const message = `Size: ${win.getSize()} Position: ${win.getPosition()}`;
     console.log('move', message);
     win.webContents.send('resize-window', message)
@@ -73,3 +72,5 @@ app.on('open-url', (event, url) => {
 
 // 初始化sqljsUtil
 require('./assets/utils/sqljsUtil');
+$mainWin = win;
+require('./assets/utils/initProject');

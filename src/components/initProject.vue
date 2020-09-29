@@ -6,8 +6,9 @@
       <Step title="完成" content="初始化设置全部完成, 开始使用"></Step>
     </Steps>
 
-    <div v-show="current === 0">
-      <Button icon="ios-cloud-upload-outline">点击选择数据库文件</Button>
+    <div v-show="current === 0" style="margin: 50px auto">
+      <Input v-model="selectDataBaseFilePath" style="width: 300px"/>
+      <Button icon="ios-cloud-upload-outline" @click="handleSelectDataBaseFile">点击选择数据库文件</Button>
     </div>
 
     <div v-show="current === 1">
@@ -30,7 +31,18 @@
 		name: "initProject",
     data: () =>{
       return {
-        current: 0
+        current: 0,
+        selectDataBaseFilePath: ''
+      }
+    },
+    methods:{
+		  handleSelectDataBaseFile(){
+        ipcRenderer.send('open_select_database_file_dialog');
+
+        ipcRenderer.on('selected_database_file', (event, path) => {
+          this.selectDataBaseFilePath = path[0]
+          console.log('selected_database_file', path)
+        })
       }
     }
 	}

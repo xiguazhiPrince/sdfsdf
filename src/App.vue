@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="layout" v-if="false">
+    <div class="layout" v-if="!isStartInitProject">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
         <Menu :active-name="'1-1'" :theme="'dark'" :width="'auto'" :open-names="['1']">
           <Submenu name="1" :to="'/home'">
@@ -32,7 +32,7 @@
         </Content>
       </Layout>
     </div>
-    <initProject v-if="true"></initProject>
+    <initProject v-if="isStartInitProject"></initProject>
   </div>
 </template>
 
@@ -53,15 +53,26 @@ export default {
     Icon,
     initProject
   },
+  data(){
+    return{
+        isStartInitProject: false
+    }
+  },
   mounted(){
     this.querySelectorAllahref();
-    this.observerBodyChange()
+    this.observerBodyChange();
+    this.checkInitProject();
 
     ipcRenderer.on('resize-window', (event, arg) => {
       // console.log('resize-window', event, arg)
     })
+
   },
   methods:{
+    checkInitProject(){ // 检查是否需要初始化项目
+      const isStartInitProject = ipcRenderer.sendSync('check_init_project', null)
+      this.isStartInitProject = isStartInitProject
+    },
     observerBodyChange(){
       let _this = this;
 

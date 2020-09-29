@@ -93,7 +93,6 @@ export default {
     show(){
       console.log('windoes',window)
       console.log('ipcRenderer',ipcRenderer)
-      ipcRenderer.send('afterLoadjs')
       // shell.openExternal('http://electron.atom.io')
       // ipcRenderer.send('show-context-menu')
     },
