@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="layout">
+    <div class="layout" v-if="false">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
         <Menu :active-name="'1-1'" :theme="'dark'" :width="'auto'" :open-names="['1']">
           <Submenu name="1" :to="'/home'">
@@ -32,12 +32,14 @@
         </Content>
       </Layout>
     </div>
-    <!--<img src="./assets/logo.png">-->
+    <initProject v-if="true"></initProject>
   </div>
 </template>
 
 <script>
 import {Breadcrumb, Content, Layout, Sider, MenuItem, BreadcrumbItem, Submenu, Icon} from 'view-design';
+import initProject from './components/initProject'
+
 export default {
   name: 'App',
   components: {
@@ -48,14 +50,15 @@ export default {
     MenuItem,
     BreadcrumbItem,
     Submenu,
-    Icon
+    Icon,
+    initProject
   },
   mounted(){
     this.querySelectorAllahref();
     this.observerBodyChange()
 
     ipcRenderer.on('resize-window', (event, arg) => {
-      console.log('resize-window', event, arg)
+      // console.log('resize-window', event, arg)
     })
   },
   methods:{

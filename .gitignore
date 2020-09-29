@@ -1,12 +1,10 @@
 .DS_Store
 node_modules/
-/dist/*
-!/dist/main.js
-!/dist/package.json
-!/dist/preload.js
-!/dist/icons
-!/dist/script
-
+/dist/build/
+/dist/node_modules/
+/dist/static/
+/dist/index.html
+/dist/package-lock.json
 
 npm-debug.log*
 yarn-debug.log*

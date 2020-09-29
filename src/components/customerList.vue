@@ -60,6 +60,7 @@
           let _this = this
         indexDbUtil.createDB_And_InitTables('customer_info',
                                             function () {
+                                              console.log('回调成功')
                                               indexDbUtil.listDataByPage('customer_info', _this.handleGetList, 1, 10)
                                             },
                                             function () {

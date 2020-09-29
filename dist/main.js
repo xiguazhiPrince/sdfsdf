@@ -6,8 +6,8 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-      width: 800,
-      height: 600,
+      width: 1200,
+      height: 750,
       webPreferences: {
         nodeIntegration: true,
         nodeIntegrationInSubFrames: true,
@@ -17,7 +17,7 @@ function createWindow() {
       }
   });
 
-  win.webContents.openDevTools();  //开启调试工具
+  // win.webContents.openDevTools();  //开启调试工具
 
   //在窗口内要展示的内容index.html 就是打包生成的index.html
   // win.loadURL(`file://${__dirname}/index.html`)
@@ -71,17 +71,5 @@ app.on('open-url', (event, url) => {
   dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
 });
 
-
-// import initSqlJs from "sql.js";
-var initSqlJs = require('./static/js/sql-wasm.js')
-var config = {
-  // 指定加载sql-wasm.wasm文件的位置
-  locateFile: filename => `./static/js/${filename}`
-};
-initSqlJs(config).then(function(SQL){
-  // Load the db
-  var db = new SQL.Database();
-  console.log('db',db)
-}).catch((res)=>{
-  console.log('res',res)
-});
+// 初始化sqljsUtil
+require('./assets/utils/sqljsUtil');
