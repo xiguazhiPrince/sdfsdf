@@ -32,7 +32,10 @@
         </Content>
       </Layout>
     </div>
-    <initProject v-if="isStartInitProject"></initProject>
+    <initProject v-if="isStartInitProject"
+                 :success="function() {
+                   isStartInitProject = false
+                 }"></initProject>
   </div>
 </template>
 

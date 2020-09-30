@@ -70,7 +70,5 @@ app.on('open-url', (event, url) => {
   dialog.showErrorBox('Welcome Back', `You arrived from: ${url}`)
 });
 
-// 初始化sqljsUtil
-require('./assets/utils/sqljsUtil');
 $mainWin = win;
-require('./assets/utils/initProject');
+require('./components/initProject');

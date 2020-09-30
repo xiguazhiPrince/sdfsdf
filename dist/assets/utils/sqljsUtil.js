@@ -1,5 +1,3 @@
-
-// import initSqlJs from "sql.js";
 const path = require('path');
 const fs = require('fs');
 const wasm = path.join(__dirname, '../js/sql-wasm.wasm');
@@ -12,15 +10,21 @@ var config = {
   // 指定加载sql-wasm.wasm文件的位置
   locateFile: filename => wasm
 };
-initSqlJs(config).then(function(SQL){
-  // Load the db
-  db = new SQL.Database();
-  console.log('sqljs链接', db)
-  // test();
-}).catch((res)=>{
-  console.log('sqljs链接异常', res)
-});
 
+
+function initSql(filebuffer){
+  return new Promise(resolve => {
+      initSqlJs(config).then(function(SQL){
+        // Load the db
+        db = new SQL.Database(filebuffer ? filebuffer : null);
+        console.log('sqljs链接', db)
+        resolve(db)
+        // test();
+      }).catch((res)=>{
+        console.log('sqljs链接异常', res)
+      });
+  });
+}
 
 function test() {
 
@@ -32,8 +36,8 @@ function test() {
 
   var res = db.exec("SELECT * FROM hello");
   /*
-   * [{columns:['a','b'], values:[[0,'hello'],[1,'world']]}]
-   */
+ * [{columns:['a','b'], values:[[0,'hello'],[1,'world']]}]
+ */
 
 // Prepare an sql statement
   var stmt = db.prepare("SELECT * FROM hello WHERE a=:aval AND b=:bval");
@@ -50,3 +54,7 @@ function test() {
   fs.writeFileSync("234.sqlite", buffer);
 
 }
+
+module.exports = {
+  initSql
+};
