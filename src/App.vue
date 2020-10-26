@@ -2,28 +2,28 @@
   <div id="app">
     <div class="layout" v-if="!isStartInitProject">
       <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
-        <Menu :active-name="'1-1'" :theme="'dark'" :width="'auto'" :open-names="['1']">
-          <Submenu name="1" :to="'/home'">
+        <Menu :active-name="'1-2'" :theme="'dark'" :width="'auto'" :open-names="['1']">
+          <Submenu name="1" :to="'/customerList'">
             <template slot="title">
               <Icon type="ios-navigate"></Icon>
               客户列表
             </template>
-            <MenuItem name="1-1" :to="'/'">首页</MenuItem>
+            <!--<MenuItem name="1-1" :to="'/'">首页</MenuItem>-->
             <MenuItem name="1-2" :to="'/customerList'">客户列表</MenuItem>
           </Submenu>
-          <!--<Submenu name="2">-->
-            <!--<template slot="title">-->
-              <!--<Icon type="ios-keypad"></Icon>-->
-              <!--Item 2-->
-            <!--</template>-->
-            <!--<MenuItem name="2-1">Option 1</MenuItem>-->
-            <!--<MenuItem name="2-2">Option 2</MenuItem>-->
-          <!--</Submenu>-->
+          <Submenu name="2">
+            <template slot="title">
+              <Icon type="ios-keypad"></Icon>
+              配置
+            </template>
+            <MenuItem name="2-1">导出</MenuItem>
+            <MenuItem name="2-2">导入</MenuItem>
+          </Submenu>
         </Menu>
       </Sider>
       <Layout :style="{marginLeft: '200px'}">
-        <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
-        <Content :style="{padding: '0 16px 16px'}">
+        <!--<Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>-->
+        <Content :style="{padding: '0 16px 16px', height: '99.7vh'}">
           <Card :style="{marginTop: '24px'}">
             <div style="min-height: 80vh">
               <router-view/>
@@ -64,7 +64,7 @@ export default {
   mounted(){
     this.querySelectorAllahref();
     this.observerBodyChange();
-    this.checkInitProject();
+    // this.checkInitProject();不需要了
 
     ipcRenderer.on('resize-window', (event, arg) => {
       // console.log('resize-window', event, arg)
@@ -73,7 +73,7 @@ export default {
   },
   methods:{
     checkInitProject(){ // 检查是否需要初始化项目
-      const isStartInitProject = ipcRenderer.sendSync('check_init_project', null)
+      const isStartInitProject = ipcRenderer.sendSync('check_init_project', null);
       this.isStartInitProject = isStartInitProject
     },
     observerBodyChange(){

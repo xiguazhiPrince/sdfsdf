@@ -12,6 +12,7 @@ let db;
 
 // 读取本地参数文件
 function readMyData() {
+  console.log('加载initProject.js');
   // 读取文件内容
   let data;
   try {

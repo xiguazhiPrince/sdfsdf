@@ -4,28 +4,46 @@
         <BreadcrumbItem>首页</BreadcrumbItem>
         <BreadcrumbItem>客户列表</BreadcrumbItem>
       </Breadcrumb>
-      <Button @click="function() {
-			    $router.back(-1);
-      }">返回</Button>
 
-      <Button @click="function() {
+      <Spin fix v-if="isLoad" size="large"/>
+
+      <Button
+        style="margin: 24px"
+        @click="function() {
 			    $router.push({
             path: '/customerAdd',
             query: {}
         });
       }">新增</Button>
+
       <Table :columns="columns" :data="list"></Table>
+      <Page style="margin: 24px"
+            show-total
+            show-sizer
+            show-elevator
+            :current.sync="pageIndex"
+            :page-size="pageSize"
+            :total="total"
+            @on-change="handleChangePageIndex"
+            @on-page-size-change="handleChangePageSize"/>
     </div>
 </template>
 
 <script>
 
-  import indexDbUtil from '../assets/db/customerDb'
+  import dexieUtil from '../assets/db/dexieUtil'
 
   export default {
         name: "customerList",
         data() {
           return {
+            isLoad: false,
+
+            pageIndex: 1,
+            pageSize: 10,
+            list: [],
+            total: 0,
+
             columns: [
               {
                 title: '姓名',
@@ -52,25 +70,29 @@
                 key: 'systemUpdateTime'
               }
             ],
-            list: [],
-            total: 0
           }
         },
       mounted(){
-          let _this = this
-        indexDbUtil.createDB_And_InitTables('customer_info',
-                                            function () {
-                                              console.log('回调成功')
-                                              indexDbUtil.listDataByPage('customer_info', _this.handleGetList, 1, 10)
-                                            },
-                                            function () {
-                                              console.log('fail')
-                                            })
+        this.handleLoadList()
       },
       methods:{
-          handleGetList(list, total){
-            this.list = list;
-            this.total = total
+          async handleLoadList(){
+            this.isLoad = true;
+
+            let data = await dexieUtil.list(this.pageIndex, this.pageSize);
+
+            this.isLoad = false;
+
+            this.list = data.list;
+            this.total = data.total
+          },
+          handleChangePageIndex: function (pageIndex) {
+            this.pageIndex = pageIndex;
+            this.handleLoadList();
+          },
+          handleChangePageSize: function (pageSize) {
+            this.pageSize = pageSize;
+            this.handleLoadList();
           }
       }
     }

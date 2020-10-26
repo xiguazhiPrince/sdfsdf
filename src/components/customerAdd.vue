@@ -1,13 +1,18 @@
 <template>
   <div>
+
     <Breadcrumb :style="{margin: '16px 0'}">
       <BreadcrumbItem>首页</BreadcrumbItem>
       <BreadcrumbItem>新增客户</BreadcrumbItem>
     </Breadcrumb>
-    <Button @click="function() {
+    <Button
+      style="margin: 24px"
+      @click="function() {
 			    $router.back(-1);
       }">返回
     </Button>
+
+    <Spin fix v-if="isLoad" size="large"/>
 
     <Form ref="form" :model="customer" class="tab-form" :label-width="100">
       <Row class="tab-form-row" type="flex" align="middle">
@@ -43,7 +48,7 @@
           <FormItem>
             <Button
               type="primary"
-              @click="handleAdd">提交
+              @click="handleAddDexie">提交
             </Button>
           </FormItem>
         </Col>
@@ -54,49 +59,64 @@
 </template>
 
 <script>
-
-  import indexDbUtil from '../assets/db/customerDb'
+  import dexieUtil from '../assets/db/dexieUtil'
 
   export default {
-    name: "customerAdd",
-    data() {
-      return {
-        customer: {
-          name: '',
-          mobile: '',
-          idNumber: '',
-          businessName: '',
-          systemCreateTime: null,
-          systemUpdateTime: null
+      name: "customerAdd",
+      data() {
+        return {
+          isLoad: false,
+          defaultCustomer: {
+            name: '',
+            mobile: '',
+            idNumber: '',
+            businessName: '',
+            systemCreateTime: null,
+            systemUpdateTime: null
+          },
+          customer: {
+          }
         }
-      }
-    },
-    mounted() {
+      },
+      mounted() {
+        this.customer = Object.assign({}, this.defaultCustomer);
+      },
+      methods: {
+          handleAddDexie(){
+              this.$refs.form.validate(async (valid) => {
+                  if (valid) {
 
-    },
-    methods: {
-      handleAdd() {
-        let _this = this;
-        function dbInitSuccess() {
-          function dbInsertSuccess(event) {
-            console.log('dbInsertSuccess', event)
-          }
-          function dbInsertFail(event) {
-            console.log('dbInsertFail', event)
-          }
-          _this.customer.systemCreateTime = new Date()
-          indexDbUtil.insertOrUpdateData(_this.customer, 'customer_info', dbInsertSuccess, dbInsertFail)
-        }
-        function dbInitFail() {
-          console.log('dbInitFail')
-        }
-        this.$refs.form.validate((valid) => {
-          if (valid) {
-            indexDbUtil.createDB_And_InitTables('customer_info', dbInitSuccess, dbInitFail)
-          }
-        })
+                      let mobileResult = await dexieUtil.findByMobile(this.customer.mobile);
+                      if (mobileResult) {
+                        this.$Message.info('手机号已存在');
+                        return
+                      }
+
+                      let idNumberResult = await dexieUtil.findByIdNumber(this.customer.idNumber);
+                      if (idNumberResult) {
+                        this.$Message.info('身份证号已存在');
+                        return
+                      }
+
+                      this.isLoad = true;
+                      dexieUtil.add({
+                        data: this.customer,
+                        onSuccess: (value)=>{
+                          this.$Message.success('添加成功');
+                          this.customer = Object.assign({}, this.defaultCustomer);
+                          this.$refs.form.resetFields()
+                        },
+                        onerror: (error)=>{
+                          console.error(error)
+                        },
+                        complete: ()=>{
+                          this.isLoad = false;
+                        }
+                      });
+                  }
+              })
+          },
       }
-    }
   }
 </script>
 
